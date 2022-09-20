@@ -6,15 +6,19 @@ export const initialState = {
 
 export const userSlice = createSlice({
   name: 'user',
+  surname: 'surname',
   initialState,
   reducers: {
-    addUser: (state,action) => {
-      state.user = action.payload
+    addUserName: (state,action) => {
+      state.name = action.payload
+    },
+    addUserSurname: (state,action) => {
+      state.surname = action.payload
     }
   },
 })
 
 
-export const { addUser } = userSlice.actions
+export const { addUserName, addUserSurname } = userSlice.actions
 
 export default userSlice.reducer

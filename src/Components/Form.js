@@ -1,32 +1,37 @@
 import { useDispatch, useSelector } from "react-redux/es/exports"
 import { useState } from "react";
-import User, { addUser, userSlice } from "./User";
+import User, { addUserName, addUserSurname, userSlice } from "./User";
 import { store } from "./store";
 
 
 const Form = () => {
-    const [username, setUsername] = useState("");
-    const dispatch = useDispatch()
-    const submitUser = () => {
-      console.log(username)
-      dispatch(addUser(...[username]))
-        console.log(store.getState())
-    }
+  const [name, setName] = useState("");
+  const [surname, setSurname] = useState("");
+  const [localUser, setLocalUser] = useState({})
+  const dispatch = useDispatch()
+  const submitUser = () => {
+    dispatch(addUserName(...[name]))
+    dispatch(addUserSurname(...[surname]))
+    setLocalUser(store.getState().user)
+  }
 
-    const submiter = (event) => {
-      event.preventDefault()
-      submitUser()
-    }
+  const submiter = (event) => {
+    event.preventDefault()
+    submitUser()
+  }
 
   return (
     <div>
-      <form onSubmit={submiter}>
-      <input type="text" placeholder='First name' onChange={(event) => {
-        setUsername(event.target.value)
-      }}/>
-      <input type="text" placeholder='Last name'/>
-      <input type="submit" value="Submit" />
-      </form>
+      {localUser.name && localUser.surname ? <h1>Hi, {localUser.name} {localUser.surname}</h1> : <form onSubmit={submiter}>
+        <input type="text" placeholder='First name' onChange={(event) => {
+          setName(event.target.value)
+        }} />
+        <input type="text" placeholder='Last name' onChange={(event) => {
+          setSurname(event.target.value)
+        }} />
+        <input type="submit" value="Submit" />
+      </form>}
+      
     </div>
   )
 }
