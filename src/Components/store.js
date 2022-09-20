@@ -6,5 +6,3 @@ export const store = configureStore({
     user: userReducer
   },
 })
-
-console.log(store.getState())
