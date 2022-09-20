@@ -1,27 +1,31 @@
-import { useDispatch } from "react-redux/es/exports"
+import { useDispatch, useSelector } from "react-redux/es/exports"
 import { useState } from "react";
-import { addUser } from "./User";
+import User, { addUser, userSlice } from "./User";
 import { store } from "./store";
 
 
 const Form = () => {
-    const dispatch = useDispatch();
-    const [name, setName] = useState("");
-    const handleChange = (event) => {
-        setName(event.target.value);
-        console.log(store.getState());
+    const [username, setUsername] = useState("");
+    const dispatch = useDispatch()
+    const submitUser = () => {
+      dispatch(addUser(...username))
+        console.log(store.getState())
+    }
+
+    const submiter = (event) => {
+      event.preventDefault()
+      submitUser()
     }
 
   return (
     <div>
-      <input type="text" placeholder='First name' onChange={handleChange}/>
+      <form onSubmit={submiter}>
+      <input type="text" placeholder='First name' onChange={(event) => {
+        setUsername(event.target.value)
+      }}/>
       <input type="text" placeholder='Last name'/>
-      <button onClick={() => dispatch({
-          type: addUser.type,
-          payload: {
-              name: name
-          }
-      })}>SUBMIT</button>
+      <input type="submit" value="Submit" />
+      </form>
     </div>
   )
 }
