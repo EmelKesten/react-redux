@@ -1,18 +1,15 @@
-import { useDispatch, useSelector } from "react-redux/es/exports"
+import { useDispatch } from "react-redux/es/exports"
 import { useState } from "react";
-import User, { addUserName, addUserSurname, userSlice } from "./User";
-import { store } from "./store";
+import { addUserName, addUserSurname } from "./User";
 
 
 const Form = () => {
   const [name, setName] = useState("");
   const [surname, setSurname] = useState("");
-  const [localUser, setLocalUser] = useState({})
   const dispatch = useDispatch()
   const submitUser = () => {
     dispatch(addUserName(...[name]))
     dispatch(addUserSurname(...[surname]))
-    setLocalUser(store.getState().user)
   }
 
   const submiter = (event) => {
@@ -22,7 +19,7 @@ const Form = () => {
 
   return (
     <div>
-      {localUser.name && localUser.surname ? <h1>Hi, {localUser.name} {localUser.surname}</h1> : <form onSubmit={submiter}>
+      <form onSubmit={submiter}>
         <input type="text" placeholder='First name' onChange={(event) => {
           setName(event.target.value)
         }} />
@@ -30,7 +27,7 @@ const Form = () => {
           setSurname(event.target.value)
         }} />
         <input type="submit" value="Submit" />
-      </form>}
+      </form>
       
     </div>
   )
