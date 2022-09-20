@@ -8,7 +8,8 @@ const Form = () => {
     const [username, setUsername] = useState("");
     const dispatch = useDispatch()
     const submitUser = () => {
-      dispatch(addUser(...username))
+      console.log(username)
+      dispatch(addUser(...[username]))
         console.log(store.getState())
     }
 
